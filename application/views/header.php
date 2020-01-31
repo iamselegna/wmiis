@@ -82,7 +82,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="<?php echo base_url('dashboard/spmoutboundinventory');?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Outbound Inventory</p>
                 </a>

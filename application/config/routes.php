@@ -73,5 +73,7 @@ $route['dashboard/spminboundinventory/addinbounditem'] = 'spminboundinventory/cr
 
 $route['dashboard/spminboundinventory/viewdetails/(:any)'] = 'spminboundinventory/view/$1';
 
+$route['dashboard/spmoutboundinventory'] = 'spmoutboundinventory';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
