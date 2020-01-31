@@ -218,3 +218,16 @@ $(document).ready(function(e){
               },
     }); // End of DataTable
   }); 
+
+  $(document).ready(function(e){
+    //var base_url = "<?php echo base_url();?>"; // You can use full url here but I prefer like this
+    $('#outbounddatatable').DataTable({
+       "pageLength" : 10,
+       "serverSide": true,
+       "order": [[0, "asc" ]],
+       "ajax":{
+                url :  'spmoutboundinventory/getoutboundinventory',
+                type : 'POST'
+              },
+    }); // End of DataTable
+  }); 

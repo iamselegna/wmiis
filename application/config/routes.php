@@ -63,17 +63,23 @@ $route['dashboard/spmhubinventory/addhubitem'] = 'spmhubinventory/additem';
 //create item for hub inventory
 $route['dashboard/spmhubinventory/createitem'] = 'spmhubinventory/create';
 
+$route['dashboard/spmhubinventory/printrandominventory'] = 'spmhubinventory/generaterandom';
+
 $route['dashboard/spminboundinventory'] = 'spminboundinventory';
 
 $route['dashboard/spminboundinventory/getinboundinventory'] = 'spminboundinventory/showinboundinventory';
 
 $route['dashboard/spminboundinventory/addinbounditem'] = 'spminboundinventory/additem';
 
-$route['dashboard/spminboundinventory/addinbounditem'] = 'spminboundinventory/create';
+$route['dashboard/spminboundinventory/createinbounditem'] = 'spminboundinventory/create';
 
 $route['dashboard/spminboundinventory/viewdetails/(:any)'] = 'spminboundinventory/view/$1';
 
 $route['dashboard/spmoutboundinventory'] = 'spmoutboundinventory';
+
+$route['dashboard/spmoutboundinventory/getoutboundinventory'] = 'spmoutboundinventory/showoutboundinventory';
+
+$route['dashboard/spmoutboundinventory/addoutbounditem'] = 'spmoutboundinventory/additem';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

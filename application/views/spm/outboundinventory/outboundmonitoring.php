@@ -5,12 +5,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-8">
-                    <h1 class="m-0 text-dark">SP Mamplasan Hub Inventory Monitoring</h1>
+                    <h1 class="m-0 text-dark">SP Mamplasan Outbound Inventory Monitoring</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-4">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>">Home</a></li>
-                        <li class="breadcrumb-item active">Hub Monitoring</li>
+                        <li class="breadcrumb-item active">Outbound Monitoring</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -26,18 +26,17 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <a  href="<?php echo base_url('dashboard/spmhubinventory/addhubitem');?>" class="btn btn-primary">Add Item</a>
-                            <a  href="<?php echo base_url('dashboard/spmhubinventory/printrandominventory');?>" class="btn btn-info">Print Random Inventory</a>
+                            <a  href="<?php echo base_url('dashboard/spmoutboundinventory/addoutbounditem');?>" class="btn btn-primary">Add Item</a>
+                            
                         </div>
                         <div class="card-body">
 
-                            <table class="table" id="datatable">
+                            <table class="table" id="outbounddatatable">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Part No</th>
-                                        <th>Stock On Hand</th>
-                                        <th>Last Update</th>
+                                        <th>WM Dr No.</th>
+                                        <th>APC Dr No.</th>
+                                        <th>Date Out</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>

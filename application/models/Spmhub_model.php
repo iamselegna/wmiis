@@ -1,12 +1,12 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
  *
  * Model Spmhub_model
  *
  * This Model for ...
- * 
+ *
  * @package		CodeIgniter
  * @category	Model
  * @author    Setiawan Jodi <jodisetiawan@fisip-untirta.ac.id>
@@ -16,25 +16,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  */
 
-class Spmhub_model extends CI_Model {
+class Spmhub_model extends CI_Model
+{
 
   // ------------------------------------------------------------------------
 
-  public function __construct()
-  {
-    parent::__construct();
-  }
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-  // ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
 
-  // ------------------------------------------------------------------------
-  public function index()
-  {
-    // 
-  }
+    // ------------------------------------------------------------------------
+    public function index()
+    {
+        //
+    }
 
-  public function add_spm_hub_item()
+    public function add_spm_hub_item()
     {
         $partNo = $this->input->post('partno');
         $result = null;
@@ -64,8 +65,30 @@ class Spmhub_model extends CI_Model {
 
         return $result;
     }
-  // ------------------------------------------------------------------------
 
+    public function get_spm_hub_item_count()
+    {
+        $this->db->reconnect();
+
+        $query = $this->db->select('COUNT(*) as ItemCount')->from('spm_hub_inventory')->where('StockOnHand > 0')->get();
+        $rows = $query->row();
+        if ($rows !== null) {
+            $data = array('ItemCount' => $rows->ItemCount);
+            return $data;
+        }
+        $this->db->close();
+    }
+
+    public function get_spm_random_inventory($recordno)
+    {
+        $this->db->reconnect();
+
+        $query = $this->db->query('CALL GetSpmHubInventoryRandomInventory(?)', $recordno);
+        $rows = $query->row_array();
+        return $rows;
+        $this->db->close();
+    }
+    // ------------------------------------------------------------------------
 }
 
 /* End of file Spmhub_model.php */
