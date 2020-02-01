@@ -84,7 +84,7 @@ class Spmhub_model extends CI_Model
         $this->db->reconnect();
 
         $query = $this->db->query('CALL GetSpmHubInventoryRandomInventory(?)', $recordno);
-        $rows = $query->row_array();
+        $rows = $query->result();
         return $rows;
         $this->db->close();
     }

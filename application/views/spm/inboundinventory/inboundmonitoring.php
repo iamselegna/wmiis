@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-8">
-                    <h1 class="m-0 text-dark">SP Mamplasan Hub Inventory Monitoring</h1>
+                    <h1 class="m-0 text-dark">SP Mamplasan Inbound Inventory Monitoring</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-4">
                     <ol class="breadcrumb float-sm-right">

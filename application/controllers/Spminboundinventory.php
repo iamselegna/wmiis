@@ -43,7 +43,7 @@ class Spminboundinventory extends CI_Controller
     $search = $this->input->post("search");
     $search = $search['value'];
     $col = 0;
-    $dir = "";
+    $dir = "desc";
     if (!empty($order)) {
       foreach ($order as $o) {
         $col = $o['column'];
@@ -88,8 +88,7 @@ class Spminboundinventory extends CI_Controller
         $rows->InboundId,
         $rows->ArNo,
         mdate('%M %d %Y', strtotime($rows->DateIn)),
-        '<a href="#" class="btn btn-warning mr-1">View Details</a>
-                '
+        '<a href="#" class="btn btn-warning mr-1">View Details</a>'
       );
     }
     $total_hubitems = $this->countinbounditems();
@@ -109,6 +108,13 @@ class Spminboundinventory extends CI_Controller
     $result = $query->row();
     if (isset($result)) return $result->num;
     return 0;
+  }
+
+  public function additem()
+  {
+    $this->load->view('header');
+    $this->load->view('spm/inboundinventory/additem');
+    $this->load->view('footer');
   }
 }
 

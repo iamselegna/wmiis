@@ -1,67 +1,50 @@
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">SP Mamplasan Hub Inventory Monitoring</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>">Home</a></li>
-                        <li class="breadcrumb-item"><a href="<?php echo base_url('dashboard/spmhubinventory'); ?>">SPM Hub Inventory</a></li>
-                        <li class="breadcrumb-item active">Print Random Inventory</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>ReportTemplate</title>
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/adminlte.min.css">
+</head>
+
+<body>
+    <a class="btn btn-primary d-print-none ml-4 mt-4 mb-4" href="<?php echo base_url('dashboard/spmhubinventory');?>" role="button">Go back to dashboard</a>
+    
+    <h3>SP Mamplasan Random Inventory<small class="float-right"><?php echo mdate('%M %d, %Y',time());?></small></h3>
+    <div class="table-bordered text-uppercase text-center">
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th>Part No</th>
+                    <th>SYSTEM QUANTITY</th>
+                    <th>Physical Count - QUANTITY</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($rows as $key => $value) {
+                echo '<tr>';
+                echo '<td>'.$value->PartNo.'</td>';
+                echo '<td>'.$value->StockOnHand.'</td>';
+                echo '<td></td>';
+                echo '</tr>';
+            }?>
+            </tbody>
+        </table>
     </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <!-- Horizontal Form -->
-                    <div class="card card-info">
-                        <div class="card-header">
-                            <h3 class="card-title">Print Random Inventory</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-                        <form class="form-horizontal" method="post">
-                            <div class="card-body">
-                                <div class="form-group row">
-                                    <label for="inputPartNo" class="col-sm-2 col-form-label">No of records</label>
-                                    <div class="col-sm-4">
-                                    <div class="input-group mb-3">
-                                            <input type="text" class="form-control" name="recordno" placeholder="Enter No of records">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">/ <?php echo $ItemCount;?></span>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                                
-                                <small class="ml-2 form-text text-danger"><?php echo validation_errors(); ?></small>
-                            </div>
-                            <!-- /.card-body -->
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-info">Print</button>
-                            </div>
-                            <!-- /.card-footer -->
-                        </form>
-                    </div>
-                    <!-- /.card -->
-
-                </div>
-                <!-- /.col-md-6 -->
+    <div class="container-fluid" style="margin-top: 30px;">
+        <div class="row">
+            <div class="col-6">
+                <h5 class="text-uppercase">ACTUAL COUNT BY: __________________________</h5>
+                <h5 class="text-uppercase" style="margin-top: 40px;">System Checked By: __________________________</h5>
             </div>
-            <!-- /.row -->
-        </div><!-- /.container-fluid -->
+        </div>
     </div>
-    <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+    <script src="<?php echo base_url();?>assets/plugins/jquery/jquery.min.js"></script>
+    <script src="<?php echo base_url();?>assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    window.addEventListener("load", window.print());
+    </script>
+</body>
+
+</html>

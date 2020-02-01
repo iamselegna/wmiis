@@ -146,18 +146,15 @@ class Spmhubinventory extends CI_Controller
     {
         $itemcount = $this->Spmhub_model->get_spm_hub_item_count();
 
-        $this->form_validation->set_rules('recordno[]', 'No of records', 'required|numeric|less_than_equal_to['.$itemcount['ItemCount'].']|greater_than[0]');
+        $this->form_validation->set_rules('recordno', 'No of records', 'required|numeric|less_than_equal_to['.$itemcount['ItemCount'].']|greater_than[0]');
         if ($this->form_validation->run() == false) {
             $this->load->view('header');
             $this->load->view('spm/hubinventory/generaterandominventory', $itemcount);
             $this->load->view('footer');
         } else {
-          
-            $data = $this->Spmhub_model->get_spm_random_inventory($this->input->post('recordno'));
-          
-            $this->load->view('header');
-            $this->load->view('spm/hubinventory/printrandominventory');
-            $this->load->view('footer');
+            $data['rows'] = $this->Spmhub_model->get_spm_random_inventory($this->input->post('recordno'));
+            
+            $this->load->view('spm/hubinventory/printrandominventory',$data);
         }
     }
 }

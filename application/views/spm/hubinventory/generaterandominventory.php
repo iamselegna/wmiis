@@ -37,7 +37,7 @@
                                     <label for="inputPartNo" class="col-sm-2 col-form-label">No of records</label>
                                     <div class="col-sm-4">
                                     <div class="input-group mb-3">
-                                            <input type="text" class="form-control" name="recordno" value="<?php echo set_value('recordno');?>" placeholder="Enter No of records">
+                                            <input type="number" class="form-control" name="recordno" value="<?php echo set_value('recordno');?>" placeholder="Enter No of records" required min="1">
                                             
                                         <div class="input-group-append">
                                             <span class="input-group-text">/ <?php echo $ItemCount;?></span>
