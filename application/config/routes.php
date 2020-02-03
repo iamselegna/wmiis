@@ -75,6 +75,12 @@ $route['dashboard/spminboundinventory/createinbounditem'] = 'spminboundinventory
 
 $route['dashboard/spminboundinventory/viewdetails/(:any)'] = 'spminboundinventory/view/$1';
 
+$route['dashboard/spminboundinventory/getallpartno'] = 'spminboundinventory/getallspmitem';
+
+$route['dashboard/spminboundinventory/createinbounditem'] = 'spminboundinventory/createitem';
+
+$route['dashboard/spminboundinventory/createinbounditemsuccess'] = 'spminboundinventory/createitemsuccess';
+
 $route['dashboard/spmoutboundinventory'] = 'spmoutboundinventory';
 
 $route['dashboard/spmoutboundinventory/getoutboundinventory'] = 'spmoutboundinventory/showoutboundinventory';

@@ -157,6 +157,7 @@ class Spmhubinventory extends CI_Controller
             $this->load->view('spm/hubinventory/printrandominventory',$data);
         }
     }
+
 }
 
 

@@ -10,7 +10,7 @@
                 <div class="col-sm-4">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>">Home</a></li>
-                        <li class="breadcrumb-item active">Hub Monitoring</li>
+                        <li class="breadcrumb-item active">Inbound Monitoring</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->

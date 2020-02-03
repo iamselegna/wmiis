@@ -15,8 +15,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/jquery-ui/jquery-ui.theme.min.css">
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/jquery-ui/jquery-ui.min.css">
+
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/toastr/toastr.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/css/adminlte.min.css">
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/css/content.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
