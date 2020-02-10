@@ -87,5 +87,7 @@ $route['dashboard/spmoutboundinventory/getoutboundinventory'] = 'spmoutboundinve
 
 $route['dashboard/spmoutboundinventory/addoutbounditem'] = 'spmoutboundinventory/additem';
 
+$route['dashboard/spmoutboundinventory/getallpartno'] = 'spmoutboundinventory/getalloutboundpartno';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

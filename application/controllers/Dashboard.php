@@ -20,19 +20,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Dashboard extends CI_Controller
 {
-    
-  public function __construct()
-  {
-    parent::__construct();
-  }
+    public function __construct()
+    {
+        parent::__construct();
 
-  public function index()
-  {
-    $this->load->view('header');
-    $this->load->view('dashboard');
-    $this->load->view('footer');
-  }
+        $this->load->model('spmhub_model');
+        $this->load->model('spminbound_model');
+        $this->load->model('spmoutbound_model');
+    }
 
+    public function index()
+    {
+        $data = $this->spmhub_model->count_spm_hub_inventory();
+        $data['InboundCount'] = $this->spminbound_model->count_inbound_today();
+        $data['OutboundCount'] = $this->spmoutbound_model->count_outbound_today();
+
+        $this->load->view('header');
+        $this->load->view('dashboard', $data);
+        $this->load->view('footer');
+    }
 }
 
 

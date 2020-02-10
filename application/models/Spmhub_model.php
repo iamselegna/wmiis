@@ -66,6 +66,9 @@ class Spmhub_model extends CI_Model
         return $result;
     }
 
+    /**
+     * FOR Generate random inventory
+     */
     public function get_spm_hub_item_count()
     {
         $this->db->reconnect();
@@ -74,6 +77,20 @@ class Spmhub_model extends CI_Model
         $rows = $query->row();
         if ($rows !== null) {
             $data = array('ItemCount' => $rows->ItemCount);
+            return $data;
+        }
+        $this->db->close();
+    }
+
+    public function count_spm_hub_inventory()
+    {
+        $this->db->reconnect();
+
+        $query = $this->db->query("CALL GetSpmHubInventoryItemCount();");
+        $rows = $query->row();
+        if($rows !== null)
+        {
+            $data = array('ItemCount' => $rows->ItemCount, 'StockCount' => $rows->StockCount);
             return $data;
         }
         $this->db->close();

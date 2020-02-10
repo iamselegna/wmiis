@@ -201,6 +201,108 @@ $("#addspminboundinventoryform").submit(function(event) {
 	});
 });
 
+$(function() {
+	$("#findoutbounditem").autocomplete({
+		source: "getallpartno",
+		minLength: 2,
+		source: function(request, response) {
+			// Fetch data
+			$.ajax({
+				url: "getallpartno",
+				type: "post",
+				dataType: "json",
+				data: {
+					search: request.term
+				},
+				success: function(data) {
+					response(data);
+					console.log(data);
+				}
+			});
+		},
+		select: function(event, ui) {
+			// Set selection
+			console.log("PartNo: " + ui.item.label + " Id: " + ui.item.value);
+
+			_partno = ui.item.label;
+			_itemid = ui.item.value;
+
+			$("#findoutbounditem").val(ui.item.label); // display the selected text
+			//$('#userid').val(ui.item.value); // save selected id to input
+			return false;
+		}
+	});
+});
+
+function addOutboundListItem() {
+	var checknoitem = document.getElementById("noitem");
+	var itemlist = document.getElementById("outbounditemlistbody");
+	var itemrow =
+		"<tr>" +
+		'<input type="hidden" id="itemid" name="itemid[]" value="' +
+		_itemid +
+		'">' +
+		'<td><button type="button" class="btn btn-danger btn-block" onclick="deleteOutboundItem(this)">Remove</button></td>' +
+		'<th scope="row"><input type="text" readonly class="form-control-plaintext" value="' +
+		_partno +
+		'"></th>' +
+		'<td><input type="number" class="form-control" min="1" max="99999" name="itemqty[]" placeholder="Quantity" required></td>' +
+		'<td><input type="text" class="form-control" name="remarks[]" placeholder="Remarks" required></td>' +
+		"</tr>";
+
+	if (_itemid != null) {
+		if (checknoitem) {
+			itemlist.deleteRow(0);
+			console.log(itemlist);
+		}
+
+		if (_itemarr.find(checkIfExistingItem)) {
+			return false;
+		}
+
+		_itemarr.push(_itemid);
+
+		$("#outbounditemlistbody").append(itemrow);
+	} else {
+		alert("Please select Part No.");
+	}
+
+	_itemid = null;
+	$("#findoutbounditem").val("");
+}
+
+function deleteOutboundItem(row) {
+	var i = row.parentNode.rowIndex;
+	var itemlist = document.getElementById("outbounditemlistbody");
+	itemlist.deleteRow(i);
+
+	console.log(_itemarr);
+
+
+	//itemid = $("#outboundiitemlistbody #itemid").val();
+	//_itemarr.splice(_itemarr.indexOf(itemid, 1));
+
+	var itemrow = itemlist.getElementsByTagName("tr");
+	var itemlength = itemrow.length;
+
+	if (itemlength == 0) {
+		var x = document.createElement("tr");
+		x.setAttribute("id", "noitem");
+		itemlist.appendChild(x);
+
+		var y = document.createElement("td");
+		var z = document.createTextNode("Please Insert Item(s)");
+		y.setAttribute("colspan", "3");
+		x.appendChild(y);
+		y.appendChild(z);
+	}
+
+	console.log(itemlength);
+}
+
+/**
+ * Datatables
+ */
 $(document).ready(function(e) {
 	//var base_url = "<?php echo base_url();?>"; // You can use full url here but I prefer like this
 	$("#datatable").DataTable({
