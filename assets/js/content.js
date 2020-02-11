@@ -1,6 +1,7 @@
 var _partno = null;
 var _itemid = null;
 var _itemarr = [];
+var _itemcount = 0;
 
 $("#addspmitem").submit(function(event) {
 	event.preventDefault();
@@ -237,6 +238,7 @@ $(function() {
 function addOutboundListItem() {
 	var checknoitem = document.getElementById("noitem");
 	var itemlist = document.getElementById("outbounditemlistbody");
+	var _itemcount =+ 1;
 	var itemrow =
 		"<tr>" +
 		'<input type="hidden" id="itemid" name="itemid[]" value="' +
@@ -272,12 +274,13 @@ function addOutboundListItem() {
 }
 
 function deleteOutboundItem(row) {
-	var i = row.parentNode.rowIndex;
+	var i = row.parentNode.parentNode;
 	var itemlist = document.getElementById("outbounditemlistbody");
-	itemlist.deleteRow(i);
+	i.parentNode.removeChild(i);
+	//itemlist.deleteRow(i);
 
-	console.log(_itemarr);
-
+	var x = document.getElementById("outbounditemlistbody");
+	//console.log(x.rows.length);
 
 	//itemid = $("#outboundiitemlistbody #itemid").val();
 	//_itemarr.splice(_itemarr.indexOf(itemid, 1));
@@ -297,7 +300,6 @@ function deleteOutboundItem(row) {
 		y.appendChild(z);
 	}
 
-	console.log(itemlength);
 }
 
 /**

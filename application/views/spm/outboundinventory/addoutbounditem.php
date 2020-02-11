@@ -16,7 +16,7 @@
                             <a href="<?php echo base_url(); ?>">Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="<?php echo base_url('dashboard/spmoutboundinventory'); ?>">SPM Outboound Inventory</a>
+                            <a href="<?php echo base_url('dashboard/spmoutboundinventory'); ?>">SPM Outbound Inventory</a>
                         </li>
                         <li class="breadcrumb-item active">Add Outbound Item</li>
                     </ol>
@@ -61,7 +61,7 @@
                                 <div class="form-group row">
                                     <label for="inputDateIn" class="col-sm-3 col-form-label">Date Out</label>
                                     <div class="col-sm-6">
-                                        <input type="date" class="form-control" id="inputDateIn" name="dateout" placeholder="Date In" required>
+                                        <input type="date" class="form-control" id="inputDateIn" name="dateout" placeholder="Date In" required value="<?php echo mdate('%Y-%m-%d', time());?>">
                                     </div>
                                 </div>
                                 <div class="form-group row">
