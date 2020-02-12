@@ -46,46 +46,49 @@
                                 <div class="form-group row">
                                     <label for="inputArNo" class="col-sm-3 col-form-label">APC DR
                                         No.</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control" id="inputAPCDrNo" name="apcdrno"
-                                            placeholder="APC DR No." required>
+                                    <div class="input-group col-sm-6">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">APC</span>
+
+                                        </div>
+                                        <input type="number" class="form-control" id="inputAPCDrNo" name="apcdrno" size="6" maxlength="6" placeholder="APC DR No." required min="0">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="inputArNo" class="col-sm-3 col-form-label">WM DR
                                         No.</label>
                                     <div class="col-sm-6">
-                                        <input type="text" readonly class="form-control-plaintext" id="inputWmDrNo" value="<?php echo mdate('%Y-%m', time()).'-'. $wmdrno['Value'];?>">
+                                        <input type="text" readonly class="form-control-plaintext" id="inputWmDrNo" value="<?php echo mdate('%Y-%m', time()) . '-' . $wmdrno['Value']; ?>">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="inputDateIn" class="col-sm-3 col-form-label">Date Out</label>
                                     <div class="col-sm-6">
-                                        <input type="date" class="form-control" id="inputDateIn" name="dateout" placeholder="Date In" required value="<?php echo mdate('%Y-%m-%d', time());?>">
+                                        <input type="date" class="form-control" id="inputDateIn" name="dateout" placeholder="Date In" required value="<?php echo mdate('%Y-%m-%d', time()); ?>">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="inputDateIn" class="col-sm-3 col-form-label">Facilities</label>
                                     <div class="col-sm-6">
-                                    <select name="facilities" class="form-control" required>
-                                        <?php
+                                        <select name="facilities" class="form-control" required>
+                                            <?php
                                             foreach ($facilities as $rows) {
-                                                echo '<option value="'.$rows['Id'].'">'.$rows['Name'].'</option>';
+                                                echo '<option value="' . $rows['Id'] . '">' . $rows['Name'] . '</option>';
                                             }
-                                        ?>
-                                    </select>
+                                            ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="inputDateIn" class="col-sm-3 col-form-label">Vehicle</label>
                                     <div class="col-sm-6">
-                                    <select name="vehicle" class="form-control" required>
-                                        <?php
+                                        <select name="vehicles" class="form-control" required>
+                                            <?php
                                             foreach ($vehicles as $rows) {
-                                                echo '<option value="'.$rows['Id'].'">'.$rows['PlateNo'].'</option>';
+                                                echo '<option value="' . $rows['Id'] . '">' . $rows['PlateNo'] . '</option>';
                                             }
-                                        ?>
-                                    </select>
+                                            ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <!-- <div class="form-group row">
@@ -101,8 +104,7 @@
                                     <div class="container px-3">
                                         <div class="row">
                                             <input type="text" id="findoutbounditem" class="form-control col-lg-4 mr-2" placeholder="Search Item">
-                                            <button type="button" class="btn btn-info mb-2"
-                                                onclick="addOutboundListItem()">Add
+                                            <button type="button" class="btn btn-info mb-2" onclick="addOutboundListItem()">Add
                                                 Item</button>
                                         </div>
                                     </div>
@@ -162,3 +164,5 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+

@@ -54,10 +54,10 @@ class Spmoutboundinventory extends CI_Controller
             $dir = "desc";
         }
         $valid_columns = array(
-      0 => 'WmDrNo',
-      1 => 'ApcDrNo',
-      2 => 'DateOut'
-    );
+            0 => 'WmDrNo',
+            1 => 'ApcDrNo',
+            2 => 'DateOut'
+        );
         if (!isset($valid_columns[$col])) {
             $order = null;
         } else {
@@ -83,20 +83,20 @@ class Spmoutboundinventory extends CI_Controller
         $data = array();
         foreach ($inbounditems->result() as $rows) {
             $data[] = array(
-        $rows->ControlSeries.'-'.$rows->WmDrNo,
-        $rows->ApcDrNo,
-        mdate('%M %d %Y', strtotime($rows->DateOut)),
-        '<a href="#" class="btn btn-warning mr-1">View Details</a>
+                $rows->ControlSeries . '-' . $rows->WmDrNo,
+                $rows->ApcDrNo,
+                mdate('%M %d %Y', strtotime($rows->DateOut)),
+                '<a href="' . base_url('dashboard/spmoutboundinventory/viewoutbounditem/') . $rows->OutboundId  . '" class="btn btn-warning mr-1">View Details</a>
                 '
-      );
+            );
         }
         $total_outbounditems = $this->countoutbounditems();
         $output = array(
-      "draw" => $draw,
-      "recordsTotal" => $total_outbounditems,
-      "recordsFiltered" => $total_outbounditems,
-      "data" => $data
-    );
+            "draw" => $draw,
+            "recordsTotal" => $total_outbounditems,
+            "recordsFiltered" => $total_outbounditems,
+            "data" => $data
+        );
         echo json_encode($output);
         exit();
     }
@@ -127,6 +127,27 @@ class Spmoutboundinventory extends CI_Controller
         $postData = $this->input->post();
         $result = $this->spmoutbound_model->get_all_part_no($postData);
         echo json_encode($result);
+    }
+
+    public function createitem()
+    {
+        return $this->spmoutbound_model->create_outbound_item();
+    }
+
+    public function viewitem($itemid)
+    {
+        $data = $this->spmoutbound_model->view_outbound_item($itemid);
+        
+        $itemdetails = array("WmDrNo" => ($data[0]['ControlSeries'].'-'.$data[0]['WmDrNo']), "DateOut"=> $data[0]['DateOut'], "APCDrNo"=> $data[0]['ApcDrNo'], "Facility"=>$data[0]['FacilityName'], "Vehicle"=>$data[0]['VehiclePlate']);
+        $itemdetails["Items"][] = array();
+
+        foreach ($data as $key => $value) {
+            $itemdetails["Items"][$key] = array("PartNo" => $value['PartNo'], "Qty"=> $value['Qty'],"Remarks"=>$value['Remarks']);
+        }
+        print_r($itemdetails);
+        // $this->view->load('header');
+        // $this->view->load('spm/outboundinventory/viewoutbounditem', $data);
+        // $this->view->load('footer');
     }
 }
 

@@ -87,6 +87,10 @@ $route['dashboard/spmoutboundinventory/getoutboundinventory'] = 'spmoutboundinve
 
 $route['dashboard/spmoutboundinventory/addoutbounditem'] = 'spmoutboundinventory/additem';
 
+$route['dashboard/spmoutboundinventory/createoutbounditem'] = 'spmoutboundinventory/createitem';
+
+$route['dashboard/spmoutboundinventory/viewoutbounditem/(:any)'] = 'spmoutboundinventory/viewitem/$1';
+
 $route['dashboard/spmoutboundinventory/getallpartno'] = 'spmoutboundinventory/getalloutboundpartno';
 
 $route['404_override'] = '';

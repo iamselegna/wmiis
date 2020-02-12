@@ -37,5 +37,12 @@
 
 <script src="<?php echo base_url();?>assets/js/content.js"></script>
 
+<script>
+    $(document).ready(function (){
+        sessionStorage.clear();
+        console.log('Session Storage Cleared');
+    });
+</script>
+
 </body>
 </html>

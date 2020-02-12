@@ -78,12 +78,13 @@ class Spmoutbound_model extends CI_Model
         /**
          * Ready insert data for outbound inventory
          */
-        $data = array('OutboundId' => $uuid,
+        $data = array(
+            'OutboundId' => $uuid,
             'ApcDrNo' => $this->input->post('apcdrno'),
             'WmDrNo' => $wmdrno,
             'DateOut' => $this->input->post('dateout'),
-            'FacilityID' => $this->input->post('facilityid'),
-            'VehicleId' => $this->input->post('vehicleid'),
+            'FacilityID' => $this->input->post('facilities'),
+            'VehicleId' => $this->input->post('vehicles'),
             'LogDate' => mdate('%Y-%m-%d %H:%i:%s', $logdate),
             'ControlSeries' => mdate('%Y-%m', $logdate),
         );
@@ -116,7 +117,7 @@ class Spmoutbound_model extends CI_Model
         foreach ($itemid as $key => $value) {
 
             //Add item(s) to $outbounditems array
-            $outbounditems[] = array('ItemID' => $value, 'Qty' => $itemqty[$key], 'OutboundId' => $uuid, 'Remarks' => $itemremarks);
+            $outbounditems[] = array('ItemID' => $value, 'Qty' => $itemqty[$key], 'OutboundId' => $uuid, 'Remarks' => $itemremarks[$key]);
 
             // Select Hub Item Qty
             $query2 = $this->db->select('StockOnHand')->from('spm_hub_inventory')
@@ -137,6 +138,16 @@ class Spmoutbound_model extends CI_Model
 
         return $result;
     }
+
+    public function get_queries($queries)
+    {
+        /**
+         * Run queries and return result
+         */
+        $query = $this->db->query($queries);
+        return $query;
+    }
+
 
     public function get_facilities()
     {
@@ -171,7 +182,7 @@ class Spmoutbound_model extends CI_Model
 
     public function get_all_part_no($postData)
     {
-      $response = array();
+        $response = array();
 
         if (isset($postData['search'])) {
             $this->db->select('*')
@@ -185,6 +196,17 @@ class Spmoutbound_model extends CI_Model
         }
 
         return $response;
+    }
+
+    public function view_outbound_item($outboundid)
+    {
+        $this->db->reconnect();
+
+        $query = $this->db->query("CALL GetSpmOutboundInventoryViewDetails(?)", $outboundid);
+        
+        return $query->result_array();
+
+        $this->db->close();
     }
 
     // ------------------------------------------------------------------------

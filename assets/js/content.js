@@ -3,7 +3,7 @@ var _itemid = null;
 var _itemarr = [];
 var _itemcount = 0;
 
-$("#addspmitem").submit(function(event) {
+$("#addspmitem").submit(function (event) {
 	event.preventDefault();
 
 	$form = $(this);
@@ -16,7 +16,7 @@ $("#addspmitem").submit(function(event) {
 		url: "createitem",
 		datatype: "json",
 		data: $serializedData,
-		success: function(response) {
+		success: function (response) {
 			console.log(response);
 			if (response.error) {
 				$("#spmadditemmessage").html(response.message);
@@ -31,7 +31,7 @@ $("#addspmitem").submit(function(event) {
 				console.log(response.message);
 			}
 		},
-		error: function(response) {
+		error: function (response) {
 			$("#spmadditemmessage").html(
 				"Something wen't wrong while processing your request. Please contact your system administrator."
 			);
@@ -42,10 +42,10 @@ $("#addspmitem").submit(function(event) {
 	});
 });
 
-$("#selectEntries").change(function(event) {
+$("#selectEntries").change(function (event) {
 	event.preventDefault();
 
-	$("#selectEntries option:selected").each(function() {
+	$("#selectEntries option:selected").each(function () {
 		$("#showEntries").submit();
 	});
 });
@@ -116,11 +116,11 @@ function checkIfExistingItem(value, index, array) {
 	}
 }
 
-$(function() {
+$(function () {
 	$("#finditem").autocomplete({
 		source: "getallpartno",
 		minLength: 2,
-		source: function(request, response) {
+		source: function (request, response) {
 			// Fetch data
 			$.ajax({
 				url: "getallpartno",
@@ -129,13 +129,13 @@ $(function() {
 				data: {
 					search: request.term
 				},
-				success: function(data) {
+				success: function (data) {
 					response(data);
 					console.log(data);
 				}
 			});
 		},
-		select: function(event, ui) {
+		select: function (event, ui) {
 			// Set selection
 			console.log("PartNo: " + ui.item.label + " Id: " + ui.item.value);
 
@@ -149,7 +149,7 @@ $(function() {
 	});
 });
 
-$("#addspminboundinventoryform").submit(function(event) {
+$("#addspminboundinventoryform").submit(function (event) {
 	event.preventDefault();
 
 	var checknoitem = document.getElementById("noitem");
@@ -167,7 +167,7 @@ $("#addspminboundinventoryform").submit(function(event) {
 		url: "createinbounditem",
 		datatype: "json",
 		data: $serializedData,
-		success: function(response) {
+		success: function (response) {
 			console.log(response);
 			if (response.error) {
 				$("#spmadditemmessage").html(response.message);
@@ -185,13 +185,13 @@ $("#addspminboundinventoryform").submit(function(event) {
 				if (tbody.children().length == 0) {
 					tbody.html(
 						'<tr id="noitem">' +
-							'<td colspan="3">Please Insert Item(s)</td>' +
-							"</tr>"
+						'<td colspan="3">Please Insert Item(s)</td>' +
+						"</tr>"
 					);
 				}
 			}
 		},
-		error: function(response) {
+		error: function (response) {
 			$("#spmadditemmessage").html(
 				"Something wen't wrong while processing your request. Please contact your system administrator."
 			);
@@ -202,11 +202,11 @@ $("#addspminboundinventoryform").submit(function(event) {
 	});
 });
 
-$(function() {
+$(function () {
 	$("#findoutbounditem").autocomplete({
 		source: "getallpartno",
 		minLength: 2,
-		source: function(request, response) {
+		source: function (request, response) {
 			// Fetch data
 			$.ajax({
 				url: "getallpartno",
@@ -215,13 +215,13 @@ $(function() {
 				data: {
 					search: request.term
 				},
-				success: function(data) {
+				success: function (data) {
 					response(data);
 					console.log(data);
 				}
 			});
 		},
-		select: function(event, ui) {
+		select: function (event, ui) {
 			// Set selection
 			console.log("PartNo: " + ui.item.label + " Id: " + ui.item.value);
 
@@ -238,18 +238,18 @@ $(function() {
 function addOutboundListItem() {
 	var checknoitem = document.getElementById("noitem");
 	var itemlist = document.getElementById("outbounditemlistbody");
-	var _itemcount =+ 1;
+	var _itemcount = + 1;
 	var itemrow =
 		"<tr>" +
 		'<input type="hidden" id="itemid" name="itemid[]" value="' +
 		_itemid +
 		'">' +
 		'<td><button type="button" class="btn btn-danger btn-block" onclick="deleteOutboundItem(this)">Remove</button></td>' +
-		'<th scope="row"><input type="text" readonly class="form-control-plaintext" value="' +
+		'<th scope="row"><input type="text" id="partno" readonly class="form-control-plaintext" value="' +
 		_partno +
 		'"></th>' +
 		'<td><input type="number" class="form-control" min="1" max="99999" name="itemqty[]" placeholder="Quantity" required></td>' +
-		'<td><input type="text" class="form-control" name="remarks[]" placeholder="Remarks" required></td>' +
+		'<td><input type="text" class="form-control" name="remarks[]" placeholder="Remarks"></td>' +
 		"</tr>";
 
 	if (_itemid != null) {
@@ -258,11 +258,14 @@ function addOutboundListItem() {
 			console.log(itemlist);
 		}
 
-		if (_itemarr.find(checkIfExistingItem)) {
+		if (sessionStorage.getItem(_partno)) {
+			alert('Item Already Exist');
 			return false;
 		}
 
-		_itemarr.push(_itemid);
+		//_itemarr.push(_itemid);
+
+		sessionStorage.setItem(_partno, _itemid);
 
 		$("#outbounditemlistbody").append(itemrow);
 	} else {
@@ -282,6 +285,10 @@ function deleteOutboundItem(row) {
 	var x = document.getElementById("outbounditemlistbody");
 	//console.log(x.rows.length);
 
+	var pnum = i.getElementsByTagName("TH")[0].children[0].value;
+	console.log(pnum);
+
+	sessionStorage.removeItem(pnum);
 	//itemid = $("#outboundiitemlistbody #itemid").val();
 	//_itemarr.splice(_itemarr.indexOf(itemid, 1));
 
@@ -302,10 +309,65 @@ function deleteOutboundItem(row) {
 
 }
 
+$("#addspmoutbounditemform").submit(function (event) {
+	event.preventDefault();
+
+	var checknoitem = document.getElementById("noitem");
+
+	if (checknoitem) {
+		alert("Please insert item(s)");
+		return false;
+	}
+
+	$form = $(this);
+
+	$serializedData = $form.serialize();
+	$.ajax({
+		type: "POST",
+		url: "createoutbounditem",
+		datatype: "json",
+		data: $serializedData,
+		success: function (response) {
+			console.log(response);
+			if (response.error) {
+				toastr.error("Add Outbound Item Failed.");
+				//$("#spmadditemmessage").html(response.message);
+				//$("#spmadditemmessage").removeClass("text-info");
+				//$("#spmadditemmessage").addClass("text-danger");
+				console.log(response.message);
+			} else {
+				//window.location.replace('createinbounditemsuccess');
+				toastr.success("Add Outbound Item Success.");
+				$form[0].reset();
+				$("#outbounditemlistbody").empty();
+
+				var tbody = $("#outbounditemlistbody");
+
+				if (tbody.children().length == 0) {
+					tbody.html(
+						'<tr id="noitem">' +
+						'<td colspan="3">Please Insert Item(s)</td>' +
+						"</tr>"
+					);
+				}
+				sessionStorage.clear();
+			}
+		},
+		error: function (response) {
+			$("#spmadditemmessage").html(
+				"Something wen't wrong while processing your request. Please contact your system administrator."
+			);
+			$("#spmadditemmessage").removeClass("text-info");
+			$("#spmadditemmessage").addClass("text-danger");
+			console.log(response.message);
+		}
+	});
+});
+
 /**
  * Datatables
  */
-$(document).ready(function(e) {
+$(document).ready(function (e) {
 	//var base_url = "<?php echo base_url();?>"; // You can use full url here but I prefer like this
 	$("#datatable").DataTable({
 		pageLength: 10,
@@ -318,7 +380,7 @@ $(document).ready(function(e) {
 	}); // End of DataTable
 });
 
-$(document).ready(function(e) {
+$(document).ready(function (e) {
 	//var base_url = "<?php echo base_url();?>"; // You can use full url here but I prefer like this
 	$("#inbounddatatable").DataTable({
 		pageLength: 10,
@@ -331,7 +393,7 @@ $(document).ready(function(e) {
 	}); // End of DataTable
 });
 
-$(document).ready(function(e) {
+$(document).ready(function (e) {
 	//var base_url = "<?php echo base_url();?>"; // You can use full url here but I prefer like this
 	$("#outbounddatatable").DataTable({
 		pageLength: 10,
