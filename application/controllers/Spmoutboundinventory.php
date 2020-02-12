@@ -144,10 +144,11 @@ class Spmoutboundinventory extends CI_Controller
         foreach ($data as $key => $value) {
             $itemdetails["Items"][$key] = array("PartNo" => $value['PartNo'], "Qty"=> $value['Qty'],"Remarks"=>$value['Remarks']);
         }
+
         print_r($itemdetails);
-        // $this->view->load('header');
-        // $this->view->load('spm/outboundinventory/viewoutbounditem', $data);
-        // $this->view->load('footer');
+        $this->load->view('header');
+        $this->load->view('spm/outboundinventory/viewoutbounditem', $itemdetails);
+        $this->load->view('footer');
     }
 }
 
