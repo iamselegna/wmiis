@@ -91,6 +91,8 @@ $route['dashboard/spmoutboundinventory/createoutbounditem'] = 'spmoutboundinvent
 
 $route['dashboard/spmoutboundinventory/viewoutbounditem/(:any)'] = 'spmoutboundinventory/viewitem/$1';
 
+$route['dashboard/spmoutboundinventory/printgatepass/(:any)'] = 'spmoutboundinventory/printgatepass/$1';
+
 $route['dashboard/spmoutboundinventory/getallpartno'] = 'spmoutboundinventory/getalloutboundpartno';
 
 $route['404_override'] = '';

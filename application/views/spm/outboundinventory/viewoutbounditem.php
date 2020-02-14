@@ -11,7 +11,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>">Home</a></li>
                         <li class="breadcrumb-item"><a
-                                href="<?php echo base_url('dashboard/spmooutboundinventory'); ?>">Outbound
+                                href="<?php echo base_url('dashboard/spmoutboundinventory'); ?>">Outbound
                                 Monitoring</a></li>
                         <li class="breadcrumb-item active"><?php echo $WmDrNo;?></li>
                     </ol>
@@ -65,9 +65,14 @@
                                         }
                                     ?>
 
-                                    
+
                                 </tbody>
                             </table>
+                            <a class="btn btn-primary mt-2"
+                                role="button" target="popup"
+                                href="#"
+                                onclick="window.open('<?php echo base_url('dashboard/spmoutboundinventory/printgatepass/'.$OutboundId); ?>','popup','width=1000,height=600');return false;">
+                                Print WMI Gate Pass</a>
 
 
                         </div>
