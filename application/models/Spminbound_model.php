@@ -19,7 +19,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Spminbound_model extends CI_Model
 {
 
-  // ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
     public function __construct()
     {
@@ -65,19 +65,31 @@ class Spminbound_model extends CI_Model
 
         $returnmessage = array();
 
-        $inboundinvdata = array('ArNo' => $arno, 'DateIn' => $datein);
+        /**
+         * Generate Universal Uniquer Identifier "UUID"
+         * This will be the value of OutboundId
+         * for current outbound inventory and items
+         */
+        $uid_query = $this->db->query("SELECT UUID() as id;");
+        $uuidrow = $uid_query->row();
+        $uuid = $uuidrow->id;
+
+        $logdate = mdate('%Y-%m-%d %H:%i:%s', now());
+
+        $inboundinvdata = array('InboundId' => $uuid, 'ArNo' => $arno, 'DateIn' => $datein, 'LogDate' => $logdate);
 
         //INSERT INBOUND INVENTORY DATA
-        if ($this->db->insert('spm_inbound_inventory', $inboundinvdata)) {
+        $this->db->insert('spm_inbound_inventory', $inboundinvdata);
+        /* if () {
 
             //GET INSERT ID OF INBOUND DATA
             $inboundinventoryid = $this->db->insert_id();
             $returnmessage['insertid'] = $inboundinventoryid;
-        }
+        } */
 
         foreach ($itemid as $key => $i) {
             // Add item array
-            $inbounditem[] = array("ItemID" => $i, "Qty" => $itemqty[$key], "InboundId" => $inboundinventoryid);
+            $inbounditem[] = array("ItemID" => $i, "Qty" => $itemqty[$key], "InboundId" => $uuid);
 
             // Select Hub Item Qty
             $query = $this->db->select('StockOnHand')->from('spm_hub_inventory')
@@ -124,7 +136,7 @@ class Spminbound_model extends CI_Model
         $this->db->close();
     }
 
-  
+
 
     // ------------------------------------------------------------------------
 }

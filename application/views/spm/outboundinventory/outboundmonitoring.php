@@ -35,8 +35,8 @@
                                 <thead>
                                     <tr>
                                         <th>WM Dr No.</th>
-                                        <th>APC Dr No.</th>
-                                        <th>Date Out</th>
+                                        <th>Outbound Date</th>
+                                        <th>Date Encoded</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>

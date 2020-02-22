@@ -56,7 +56,8 @@ class Spminboundinventory extends CI_Controller
         $valid_columns = array(
       0 => 'InboundId',
       1 => 'ArNo',
-      2 => 'DateIn'
+      2 => 'DateIn',
+      3 => 'LogDate'
     );
         if (!isset($valid_columns[$col])) {
             $order = null;

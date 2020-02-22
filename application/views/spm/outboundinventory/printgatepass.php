@@ -58,8 +58,27 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="text-center">APC<?php echo $APCDrNo;?></td>
+                                <?php
+                                foreach ($Items as $key => $value) {
+                                    echo "<tr>";
+                                    if(array_key_exists($key, $ApcDrNo))
+                                    {
+                                        echo("<td class=\"text-center\"> APC" .$ApcDrNo[$key]["ApcDrNo"]. "</td>");
+                                    }else
+                                    {
+                                        echo("<td></td>");
+                                    } 
+                                    echo "<td></td>";
+                                    echo "<td></td>";
+                                    echo "<td class=\"text-center\">" . $value['PartNo'] . "</td>";
+                                    echo "<td class=\"text-center\">" . $value['Qty'] . "</td>";
+                                    echo "<td class=\"text-center\">" . $value['Remarks'] . "</td>";
+                                    echo "</tr>";
+                                }
+
+                                ?>
                             </tr>
+
                             <tr>
                                 <td class="text-center" colspan="6">&nbsp;</td>
                             </tr>

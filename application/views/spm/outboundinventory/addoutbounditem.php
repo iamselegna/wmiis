@@ -44,23 +44,28 @@
                         <form class="form-horizontal" id="addspmoutbounditemform">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <label for="inputArNo" class="col-sm-3 col-form-label">APC DR
-                                        No.</label>
-                                    <div class="input-group col-sm-6">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">APC</span>
-
-                                        </div>
-                                        <input type="number" class="form-control" id="inputAPCDrNo" name="apcdrno" size="6" maxlength="6" placeholder="APC DR No." required min="0">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
                                     <label for="inputArNo" class="col-sm-3 col-form-label">WM DR
                                         No.</label>
                                     <div class="col-sm-6">
                                         <input type="text" readonly class="form-control-plaintext" id="inputWmDrNo" value="<?php echo mdate('%Y-%m', time()) . '-' . $wmdrno['Value']; ?>">
                                     </div>
                                 </div>
+                                <div id="apcdrrow">
+                                    <div class="form-group row">
+                                        <label for="inputArNo" class="col-sm-3 col-form-label">APC DR
+                                            No.</label>
+                                        <div class="input-group col-sm-6">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">APC</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="inputAPCDrNo" name="apcdrno[]" placeholder="APC DR No." required min="0">
+                                        </div>
+
+                                        <button type="button" class="btn btn-primary" id="addapcdr">Add APC DR No.</button>
+                                    </div>
+                                </div>
+
+
                                 <div class="form-group row">
                                     <label for="inputDateIn" class="col-sm-3 col-form-label">Date Out</label>
                                     <div class="col-sm-6">
@@ -164,5 +169,3 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
-

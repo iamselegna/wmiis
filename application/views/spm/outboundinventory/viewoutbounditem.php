@@ -13,7 +13,7 @@
                         <li class="breadcrumb-item"><a
                                 href="<?php echo base_url('dashboard/spmoutboundinventory'); ?>">Outbound
                                 Monitoring</a></li>
-                        <li class="breadcrumb-item active"><?php echo $WmDrNo;?></li>
+                        <li class="breadcrumb-item active"><?php echo $WmDrNo; ?></li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -35,15 +35,22 @@
 
                             <dl class="row">
                                 <dt class="col-sm-2">WM Dr No.</dt>
-                                <dd class="col-sm-10"><?php echo $WmDrNo;?></dd>
+                                <dd class="col-sm-10"><?php echo $WmDrNo; ?></dd>
                                 <dt class="col-sm-2">APC Dr No.</dt>
-                                <dd class="col-sm-10">APC<?php echo $APCDrNo;?></dd>
+                                <dd class="col-sm-10">
+                                    <?php 
+                                    foreach($ApcDrNo as $key => $value)
+                                    {
+                                        echo "APC".$value["ApcDrNo"]." ";
+                                    } 
+                                    ?>
+                                </dd>
                                 <dt class="col-sm-2">Date Out</dt>
-                                <dd class="col-sm-10"><?php echo mdate('%M %d, %Y', strtotime($DateOut));?></dd>
+                                <dd class="col-sm-10"><?php echo mdate('%M %d, %Y', strtotime($DateOut)); ?></dd>
                                 <dt class="col-sm-2">Facility</dt>
-                                <dd class="col-sm-10"><?php echo $Facility;?></dd>
+                                <dd class="col-sm-10"><?php echo $Facility; ?></dd>
                                 <dt class="col-sm-2">Vehicle</dt>
-                                <dd class="col-sm-10"><?php echo $Vehicle;?></dd>
+                                <dd class="col-sm-10"><?php echo $Vehicle; ?></dd>
                             </dl>
 
                             <table class="table table-bordered">
@@ -56,22 +63,20 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                        foreach ($Items as $key => $value) {
-                                            echo    '<tr>'.
-                                                    '<td>'.$value['PartNo'].'</td>'.
-                                                    '<td>'.$value['Qty'].'</td>'.
-                                                    ' <td>'.$value['Remarks'].'</td>'.
-                                                    '</tr>';
-                                        }
+                                    foreach ($Items as $key => $value) {
+                                        echo    '<tr>' .
+                                            '<td>' . $value['PartNo'] . '</td>' .
+                                            '<td>' . $value['Qty'] . '</td>' .
+                                            ' <td>' . $value['Remarks'] . '</td>' .
+                                            '</tr>';
+                                    }
                                     ?>
 
 
                                 </tbody>
                             </table>
-                            <a class="btn btn-primary mt-2"
-                                role="button" target="popup"
-                                href="#"
-                                onclick="window.open('<?php echo base_url('dashboard/spmoutboundinventory/printgatepass/'.$OutboundId); ?>','popup','width=1000,height=600');return false;">
+                            <a class="btn btn-primary mt-2" role="button" target="popup" href="#"
+                                onclick="window.open('<?php echo base_url('dashboard/spmoutboundinventory/printgatepass/' . $OutboundId); ?>','popup','width=1000,height=600');return false;">
                                 Print WMI Gate Pass</a>
 
 

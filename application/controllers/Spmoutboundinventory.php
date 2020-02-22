@@ -57,6 +57,7 @@ class Spmoutboundinventory extends CI_Controller
             0 => 'WmDrNo',
             1 => 'ApcDrNo',
             2 => 'DateOut',
+            3 => 'LogDate',
         );
         if (!isset($valid_columns[$col])) {
             $order = null;
@@ -79,13 +80,13 @@ class Spmoutboundinventory extends CI_Controller
             }
         }
         $this->db->limit($length, $start);
-        $inbounditems = $this->db->get("spm_outbound_inventory");
+        $outbounditems = $this->db->get("spm_outbound_inventory");
         $data = array();
-        foreach ($inbounditems->result() as $rows) {
+        foreach ($outbounditems->result() as $rows) {
             $data[] = array(
                 $rows->ControlSeries . '-' . $rows->WmDrNo,
-                $rows->ApcDrNo,
                 mdate('%M %d %Y', strtotime($rows->DateOut)),
+                mdate('%M %d %Y', strtotime($rows->LogDate)),
                 '<a href="' . base_url('dashboard/spmoutboundinventory/viewoutbounditem/') . $rows->OutboundId . '" class="btn btn-warning mr-1">View Details</a>
                 ',
             );
@@ -138,13 +139,19 @@ class Spmoutboundinventory extends CI_Controller
     {
         $data = $this->spmoutbound_model->view_outbound_item($itemid);
 
-        $itemdetails = array("OutboundId" => $data[0]['OutboundId'], "WmDrNo" => ($data[0]['ControlSeries'] . '-' . $data[0]['WmDrNo']), "DateOut" => $data[0]['DateOut'], "APCDrNo" => $data[0]['ApcDrNo'], "Facility" => $data[0]['FacilityName'], "Vehicle" => $data[0]['VehiclePlate']);
+        //print("<pre>".print_r($data,true)."</pre>");
+
+        $itemdetails = array("OutboundId" => $data[0][0]['OutboundId'], "WmDrNo" => ($data[0][0]['ControlSeries'] . '-' . $data[0][0]['WmDrNo']), "DateOut" => $data[0][0]['DateOut'], "Facility" => $data[0][0]['Facility'], "Vehicle" => $data[0][0]['Vehicle']);
         $itemdetails["Items"][] = array();
 
-        foreach ($data as $key => $value) {
+        foreach ($data[1] as $key => $value) {
             $itemdetails["Items"][$key] = array("PartNo" => $value['PartNo'], "Qty" => $value['Qty'], "Remarks" => $value['Remarks']);
         }
-        echo json_encode($itemdetails);
+
+        foreach ($data[2] as $key => $value) {
+            $itemdetails["ApcDrNo"][$key] = array("ApcDrNo" => $value['ApcDrNo']);
+        }
+
         $this->load->view('header');
         $this->load->view('spm/outboundinventory/viewoutbounditem', $itemdetails);
         $this->load->view('footer');
@@ -154,11 +161,17 @@ class Spmoutboundinventory extends CI_Controller
     {
         $data = $this->spmoutbound_model->view_outbound_item($itemid);
 
-        $itemdetails = array("OutboundId" => $data[0]['OutboundId'], "ControlSeries" => $data[0]['ControlSeries'], "WmDrNo" => $data[0]['WmDrNo'], "DateOut" => $data[0]['DateOut'], "APCDrNo" => $data[0]['ApcDrNo'], "Facility" => $data[0]['FacilityName'], "Vehicle" => $data[0]['VehiclePlate']);
+        //print("<pre>".print_r($data,true)."</pre>");
+
+        $itemdetails = array("OutboundId" => $data[0][0]['OutboundId'], "ControlSeries" => $data[0][0]['ControlSeries'], "WmDrNo" => $data[0][0]['WmDrNo'], "DateOut" => $data[0][0]['DateOut'], "Facility" => $data[0][0]['Facility'], "Vehicle" => $data[0][0]['Vehicle']);
         $itemdetails["Items"][] = array();
 
-        foreach ($data as $key => $value) {
+        foreach ($data[1] as $key => $value) {
             $itemdetails["Items"][$key] = array("PartNo" => $value['PartNo'], "Qty" => $value['Qty'], "Remarks" => $value['Remarks']);
+        }
+
+        foreach ($data[2] as $key => $value) {
+            $itemdetails["ApcDrNo"][$key] = array("ApcDrNo" => $value['ApcDrNo']);
         }
 
         $this->load->view('spm/outboundinventory/printgatepass.php', $itemdetails);

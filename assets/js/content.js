@@ -1,5 +1,6 @@
 var _partno = null;
 var _itemid = null;
+var _curstock = null;
 var _itemarr = [];
 var _itemcount = 0;
 
@@ -226,6 +227,7 @@ $(function () {
 
 			_partno = ui.item.label;
 			_itemid = ui.item.value;
+			_curstock = ui.item.curstock;
 
 			$("#findoutbounditem").val(ui.item.label); // display the selected text
 			//$('#userid').val(ui.item.value); // save selected id to input
@@ -247,7 +249,15 @@ function addOutboundListItem() {
 		'<th scope="row"><input type="text" id="partno" readonly class="form-control-plaintext" value="' +
 		_partno +
 		'"></th>' +
-		'<td><input type="number" class="form-control" min="1" max="99999" name="itemqty[]" placeholder="Quantity" required></td>' +
+		'<td>' +
+		'<div class="input-group">' +
+		'<input type="number" class="form-control" min="1" max="' + _curstock + '" name="itemqty[]" placeholder="Quantity" required>' +
+		'<div class="input-group-prepend">' +
+		'<span class="input-group-text"> / ' + _curstock + '</span>' +
+		'</div>' +
+		'</div>' +
+		'</td>' +
+
 		'<td><input type="text" class="form-control" name="remarks[]" placeholder="Remarks"></td>' +
 		"</tr>";
 
@@ -304,6 +314,26 @@ function deleteOutboundItem(row) {
 
 }
 
+$("#addapcdr").click(function () {
+	var _parent = this.parentNode.parentNode;
+	
+		$("#apcdrrow").append("<div class='form-group row'>" +
+		"<div class='input-group col-sm-6 offset-sm-3'>" +
+		"<div class='input-group-prepend'>" +
+		"<span class='input-group-text'>APC</span>" +
+		"</div>" +
+		"<input type='text' class='form-control' id='inputAPCDrNo' name='apcdrno[]' placeholder='APC DR No.' required min='0'>" +
+		"</div>" +
+		"<button type='button' class='btn btn-danger' onclick='deleteApcDr(this)'>Remove</button>" +
+		"</div > ");
+});
+
+function deleteApcDr(row)
+{
+	var _parent = row.parentNode;
+	row.parentNode.remove(_parent);
+}
+
 $("#addspmoutbounditemform").submit(function (event) {
 	event.preventDefault();
 
@@ -332,7 +362,12 @@ $("#addspmoutbounditemform").submit(function (event) {
 				console.log(response.message);
 			} else {
 				//window.location.replace('createinbounditemsuccess');
+
+				toastr.options.onHidden = function () { window.location.reload(); }
+				toastr.options.timeOut = 2000;
+
 				toastr.success("Add Outbound Item Success.");
+				//window.location.reload();
 				$form[0].reset();
 				$("#outbounditemlistbody").empty();
 
@@ -393,7 +428,7 @@ $(document).ready(function (e) {
 	$("#outbounddatatable").DataTable({
 		pageLength: 10,
 		serverSide: true,
-		order: [[0, "desc"]],
+		order: [[3, "desc"]],
 		ajax: {
 			url: "spmoutboundinventory/getoutboundinventory",
 			type: "POST"

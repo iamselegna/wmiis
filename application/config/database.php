@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => '192.168.56.102',
 	'username' => 'dbadmin',
 	'password' => 'databaseadmin1234',
 	'database' => 'wmsdb',

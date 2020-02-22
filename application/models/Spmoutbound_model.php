@@ -80,7 +80,6 @@ class Spmoutbound_model extends CI_Model
          */
         $data = array(
             'OutboundId' => $uuid,
-            'ApcDrNo' => $this->input->post('apcdrno'),
             'WmDrNo' => $wmdrno,
             'DateOut' => $this->input->post('dateout'),
             'FacilityID' => $this->input->post('facilities'),
@@ -117,7 +116,7 @@ class Spmoutbound_model extends CI_Model
         foreach ($itemid as $key => $value) {
 
             //Add item(s) to $outbounditems array
-            $outbounditems[] = array('ItemID' => $value, 'Qty' => $itemqty[$key], 'OutboundId' => $uuid, 'Remarks' => $itemremarks[$key]);
+            $outbounditems[] = array('ItemID' => $value, 'Qty' => $itemqty[$key], 'OutboundId' => $uuid, 'Remarks' => ($itemremarks[$key] == NULL ? NULL : $itemremarks[$key]));
 
             // Select Hub Item Qty
             $query2 = $this->db->select('StockOnHand')->from('spm_hub_inventory')
@@ -130,7 +129,20 @@ class Spmoutbound_model extends CI_Model
             $updatehubitems[] = array("ItemId" => $value, "StockOnHand" => $newqty, "LastUpdate" => mdate("%Y-%m-%d", time()));
         }
 
+        /**
+         * Ready APC DR Item Array
+         */
+        $itemapcdr = $this->input->post('apcdrno');
+        $apcdrno = array();
+
+        foreach ($itemapcdr as $key => $value) {
+            $apcdrno[] = array("ApcDrNo" => $value, "OutboundId" => $uuid);
+        }
+
+
         $this->db->insert_batch('spm_outbound_inventory_item', $outbounditems);
+
+        $this->db->insert_batch('spm_outbound_inventory_apcdr', $apcdrno);
 
         $this->db->update_batch('spm_hub_inventory', $updatehubitems, 'ItemId');
 
@@ -191,7 +203,7 @@ class Spmoutbound_model extends CI_Model
             $records = $this->db->get('spm_hub_inventory')->result();
 
             foreach ($records as $rows) {
-                $response[] = array("label" => $rows->PartNo, "value" => $rows->ItemId);
+                $response[] = array("label" => $rows->PartNo, "value" => $rows->ItemId, "curstock" => $rows->StockOnHand);
             }
         }
 
@@ -200,11 +212,16 @@ class Spmoutbound_model extends CI_Model
 
     public function view_outbound_item($outboundid)
     {
+        $this->load->library("mydb");
+
         $this->db->reconnect();
 
-        $query = $this->db->query("CALL GetSpmOutboundInventoryViewDetails(?)", $outboundid);
-        
-        return $query->result_array();
+        $query = "CALL GetSpmOutboundInventoryViewDetails('" . $outboundid . "')";
+
+        return $this->mydb->get_multi_result($query);
+        //$query = $this->db->query("CALL GetSpmOutboundInventoryViewDetails(?)", $outboundid);
+
+        //return $query->result_array();
 
         $this->db->close();
     }
